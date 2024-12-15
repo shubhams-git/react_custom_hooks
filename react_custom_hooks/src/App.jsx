@@ -3,14 +3,20 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useTodos } from './hooks/useTodos'
+import useSWR from 'swr'
 
 function App() {
-  const {todos,loading} = useTodos(2)
+  const fetcher = async (url)=>{
+    const res = await fetch(url)
+    const json = await res.json()
+    return json
+  }
+  const {data, error, isLoading} = useSWR("http://localhost:3000/", fetcher)
 
 
   return (
     <>
-      {loading? (<div>Loading....</div>): (todos.map(todo=> <Todo title={todo.title} description={todo.description}/>))}
+      {error? (<div>Error!</div>):isLoading? (<div>Loading....</div>): (data.map(todo=> <Todo title={todo.title} description={todo.description}/>))}
     </>
   )
 }
