@@ -19,8 +19,7 @@ const todos = [{
 },
 ]
 
-app.get("/", (req,res)=>{
-
+app.get("/", async (req,res)=>{
     return res.send(todos)
 })
 

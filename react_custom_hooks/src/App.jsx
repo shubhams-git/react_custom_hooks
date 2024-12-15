@@ -5,12 +5,12 @@ import './App.css'
 import { useTodos } from './hooks/useTodos'
 
 function App() {
-  const {todos,loading} = useTodos()
+  const {todos,loading} = useTodos(2)
 
 
   return (
     <>
-      {loading === "true"? (<div>Loading....</div>): (todos.map(todo=> <Todo title={todo.title} description={todo.description}/>))}
+      {loading? (<div>Loading....</div>): (todos.map(todo=> <Todo title={todo.title} description={todo.description}/>))}
     </>
   )
 }
