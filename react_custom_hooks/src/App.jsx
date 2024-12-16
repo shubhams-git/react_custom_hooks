@@ -3,30 +3,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useTodos } from './hooks/useTodos'
-import useSWR from 'swr'
+import { useIsOnline } from './hooks/useIsOnline'
 
 function App() {
-  const fetcher = async (url)=>{
-    const res = await fetch(url)
-    const json = await res.json()
-    return json
-  }
-  const {data, error, isLoading} = useSWR("http://localhost:3000/", fetcher)
+  const online = useIsOnline()
 
-
-  return (
-    <>
-      {error? (<div>Error!</div>):isLoading? (<div>Loading....</div>): (data.map(todo=> <Todo title={todo.title} description={todo.description}/>))}
-    </>
-  )
-}
-
-
-function Todo({title, description}){
   return <div>
-    <h1>{title}</h1>
-    <h2>{description}</h2>
-    <br/>
+    {online? <h1 style={{color:"green"}}>We're Online :) </h1>:<h1 style={{color:"red"}}> We're Offline :( </h1>}
   </div>
 }
 
